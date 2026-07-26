@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --background: #08090b;
+  --foreground: #f4f5f7;
+  --accent: #e30a17;
+  --accent-2: #38bdf8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0e11;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2d33;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3e46;
+}
+
+.circuit-line {
+  stroke-dasharray: 12 10;
+  animation: dash-flow 6s linear infinite;
+}
+
+.circuit-node {
+  animation: node-pulse 3s ease-in-out infinite;
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -220;
+  }
+}
+
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    r: 2.5;
+  }
+  50% {
+    opacity: 1;
+    r: 4;
+  }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
