@@ -1,37 +1,44 @@
 import type { Lang } from "./language-context";
 
-export interface TimelineItem {
+export interface ExperienceItem {
   period: string;
-  title: string;
-  place: string;
-  description: string;
-  type: "education" | "experience" | "leadership";
+  role: string;
+  org: string;
+  bullets: string[];
 }
 
 export interface ProjectItem {
+  no: string;
   title: string;
-  year: string;
-  tags: string[];
-  description: string;
-  image: string;
+  meta: string;
+  summary: string;
+  role: string;
+  stack: string[];
+  image?: string;
 }
 
-export interface GithubProjectItem {
-  title: string;
-  description: string;
+export interface RepoItem {
+  name: string;
+  summary: string;
   url: string;
-  language: string;
+  lang: string;
 }
 
-export interface AchievementItem {
-  title: string;
-  year: string;
-  description: string;
+export interface SkillGroup {
+  label: string;
+  items: string;
 }
 
-export interface SkillCategory {
-  title: string;
-  items: string[];
+export interface EducationItem {
+  period: string;
+  program: string;
+  school: string;
+  detail: string;
+}
+
+export interface CertGroup {
+  issuer: string;
+  items: { name: string; detail?: string }[];
 }
 
 export const socials = {
@@ -42,658 +49,663 @@ export const socials = {
   location: "Ümraniye, İstanbul",
 };
 
-const contentTr = {
+const tr = {
   nav: {
-    about: "Hakkımda",
-    skills: "Yetkinlikler",
-    timeline: "Deneyim",
+    profile: "Profil",
+    experience: "Deneyim",
     projects: "Projeler",
     code: "Yazılım",
-    achievements: "Başarılar",
+    skills: "Yetkinlikler",
+    education: "Eğitim",
     contact: "İletişim",
-    cv: "CV İndir",
+    cv: "CV",
   },
   hero: {
-    kicker: "Yazılım & Sistem Geliştirici · Maker",
     name: "Serkan Acar",
-    tagline:
-      "Dijital algoritmaları fiziksel mekaniklerle birleştiren, “Milli Teknoloji” vizyonuna odaklı çözüm üreticisi.",
-    quote:
-      "“Masa başında yazılan dijital algoritmaları, sahada tıkır tıkır çalışan fiziksel mekaniklerle birleştiriyorum.”",
-    ctaPrimary: "Projelerimi Keşfet",
-    ctaSecondary: "İletişime Geç",
-    scroll: "Aşağı kaydır",
+    role: "Yazılım Geliştirici",
+    field: "Yapay Zekâ ve Gömülü Sistemler",
+    profile:
+      "Yönetim Bilişim Sistemleri mezunu yazılım geliştirici. Python tabanlı uygulama geliştirme, görüntü işleme ve iş süreçleri otomasyonu alanlarında proje deneyimi. Savunma sanayi ve kurumsal yazılım projelerinde yazılım–donanım entegrasyonu odaklı çalışmalar.",
+    metaLabels: {
+      location: "Konum",
+      focus: "Odak",
+      languages: "Diller",
+      status: "Durum",
+    },
+    metaValues: {
+      location: "İstanbul, Türkiye",
+      focus: "Görüntü işleme, otomasyon",
+      languages: "Türkçe, İngilizce, Makedonca",
+      status: "Yeni projelere açık",
+    },
+    cta: "İletişim",
+    cvCta: "CV indir (PDF)",
   },
-  about: {
-    heading: "Hakkımda",
-    kicker: "Sistem Mimarisi ve Hibrit Altyapı",
-    paragraphs: [
-      "Ben Serkan Acar. Dijital dünyadaki algoritmaları, fiziksel dünyadaki mekaniklerle birleştiren bir sistem geliştiriciyim.",
-      "Yönetim Bilişim Sistemleri (%100 İngilizce) lisansım bana karmaşık yazılım mimarileri ve iş süreçleri kurma yeteneği verirken; Gemi Makineleri İşletme geçmişim, donanımların ve mekanik sistemlerin dilinden anlamamı sağlıyor. Masa başında yazılım geliştirmekle kalmıyor, sahaya iniyorum.",
-      "Rusya'da (Rostov, Azov, Yeysk) ticari gemilerde, açık denizlerin kısıtlı ve zorlu şartlarında çalışarak kriz anlarında soğukkanlılıkla problem çözme disiplini kazandım. Kuzey Makedonya'da geçirdiğim eğitim hayatım sayesinde Makedonca konuşabiliyorum; Taekwondo branşındaki Berlin Open şampiyonluğumla uluslararası vizyonumu erken yaşta genişlettim.",
-      "Bugün tüm bu teknik donanımımı, sahadaki kriz yönetimi tecrübemi ve uluslararası vizyonumu, “Milli Teknoloji Hamlesi” hedefleri doğrultusunda yerli ve milli sistemler üretmek için kullanıyorum.",
-    ],
-    stackHeading: "Kullandığım Teknolojiler",
-    stack: [
-      "C / C++",
-      "Python",
-      "SQL",
-      "TensorFlow / PyTorch",
-      "OpenCV",
-      "Raspberry Pi / ESP32 / Arduino",
-      "Fusion 360",
-      "n8n / Glide",
-      "Django / Flask",
-      "Git / CI/CD",
-    ],
+  sections: {
+    experience: "Deneyim",
+    projects: "Projeler",
+    code: "Yazılım Projeleri",
+    skills: "Yetkinlikler",
+    education: "Eğitim ve Sertifikalar",
+    awards: "Ödüller ve Liderlik",
+    contact: "İletişim",
   },
-  skills: {
-    heading: "Yetkinlikler",
-    kicker: "Uçtan Uca Çözüm Yetkinliği",
-    categories: [
-      {
-        title: "Programlama",
-        items: ["Python", "C", "C++", "OOP", "SQL", "Deluge", "VBA"],
-      },
-      {
-        title: "Yapay Zeka & Veri Bilimi",
-        items: [
-          "Makine Öğrenmesi",
-          "Derin Öğrenme",
-          "Görüntü İşleme",
-          "NLP",
-          "Büyük Veri Analitiği",
-          "Veri Madenciliği",
-        ],
-      },
-      {
-        title: "Kütüphaneler & Framework'ler",
-        items: ["TensorFlow", "Keras", "PyTorch", "OpenCV", "Scikit-Learn", "Flask", "Django"],
-      },
-      {
-        title: "Sistem & Gömülü Yazılım",
-        items: [
-          "Gömülü Sistemler",
-          "Arduino",
-          "Raspberry Pi 5",
-          "ESP32",
-          "Deneyap Kart",
-          "Endüstriyel Otomasyon",
-        ],
-      },
-      {
-        title: "Tasarım & Üretim",
-        items: ["Fusion 360", "3D Modelleme", "Flashforge Adventurer 5M Pro", "Prototipleme"],
-      },
-      {
-        title: "Araçlar & Metodolojiler",
-        items: ["Git / GitHub", "CI/CD", "Google Cloud", "MATLAB / Simulink", "Agile & Scrum", "n8n", "Glide"],
-      },
-    ] as SkillCategory[],
-  },
-  timelineHeading: "Deneyim & Eğitim",
-  timelineKicker: "Kronolojik Yolculuk",
-  timeline: [
+  experience: [
     {
-      period: "2019 – 2021",
-      title: "Gemi Makineleri İşletme",
-      place: "Ordu Üniversitesi",
-      description:
-        "Gemi motorları ve mekanik sistemlerin işletilmesi, periyodik bakımı, gemi güvenliği ve çevre koruma standartları odaklı teknik eğitim.",
-      type: "education",
+      period: "09.2021 — Devam",
+      role: "Yazılım ve Sistem Geliştirici",
+      org: "Freelance",
+      bullets: [
+        "Python, n8n ve Glide ile iş süreçlerine yönelik otomasyon ve özel yazılım çözümleri geliştirme",
+        "Fusion 360 ile üretime uygun 3D mekanik tasarım ve prototip modelleme",
+        "Yazılım ve donanım bileşenlerinin birlikte çalıştığı uçtan uca çözümlerin kurgulanması",
+      ],
     },
     {
-      period: "09.2021 – Halen",
-      title: "Yazılım & Sistem Geliştirici",
-      place: "Freelancer",
-      description:
-        "Python, n8n ve Glide kullanarak özel yazılımlar ve otomasyon senaryoları geliştiriyorum. Fusion 360 ile 3D mekanik tasarımlar yapıyor, dijital ile fizikselin entegre çalıştığı uçtan uca çözümler sunuyorum.",
-      type: "experience",
+      period: "03.2026 — 07.2026",
+      role: "IMU Stajyeri",
+      org: "TRC Marine Electronic",
+      bullets: [
+        "Denizcilik elektroniği süreçlerinde sistem takibi ve saha entegrasyonlarının yürütülmesi",
+        "Mikrodenetleyici tabanlı gömülü yazılım geliştirme çalışmalarına katılım",
+        "Teknik personel eğitimlerinin organize edilmesi",
+      ],
     },
     {
-      period: "12.2021 – 06.2022",
-      title: "Asistan Öğrenci",
-      place: "İstanbul Nişantaşı Üniversitesi",
-      description:
-        "ERP süreçleri kapsamında süreç analizi ve teknik dokümantasyon; \"Nish Spor Sitesi\" projesinde front-end ve back-end geliştirme.",
-      type: "experience",
+      period: "11.2024 — 12.2024",
+      role: "Görüntü İşleme ve Yapay Zekâ Uzmanı (Proje Bazlı)",
+      org: "Daz-Tech Innovation & Technology",
+      bullets: [
+        "Savunma sanayine yönelik nesne tespiti ve hedef takibi algoritmalarının geliştirilmesi",
+        "Derin öğrenme tabanlı anomali analizi ve karar destek modellerinin oluşturulması",
+      ],
     },
     {
-      period: "2021 – 2026",
-      title: "Yönetim Bilişim Sistemleri (%100 İngilizce)",
-      place: "İstanbul Nişantaşı Üniversitesi",
-      description:
-        "Sistem tasarımı, yazılım geliştirme, veritabanı yönetimi ve iş analizi; iş zekâsı, veri analizi, karar destek sistemleri, bulut bilişim ve mobil uygulama odaklı eğitim.",
-      type: "education",
+      period: "08.2023 — 11.2023",
+      role: "ManageEngine Developer",
+      org: "Palcon Bilişim Sistemleri",
+      bullets: [
+        "ManageEngine ITSM platformunda Deluge ve Python ile arayüz ve back-end geliştirme",
+        "Kurumsal iş akışlarına yönelik otomasyon ve sistem entegrasyonlarının kurulması",
+      ],
     },
     {
-      period: "12.2022 – 06.2023",
-      title: "Stajyer",
-      place: "Yıldız Holding (Bizim Toptan)",
-      description:
-        "Kurumsal sistemlerde ürün implementasyonu ve uçtan uca entegrasyon; eBA İş Akış Yönetimi ve Former süreç yönetimi çalışmaları.",
-      type: "experience",
+      period: "12.2022 — 06.2023",
+      role: "Stajyer",
+      org: "Yıldız Holding (Bizim Toptan)",
+      bullets: [
+        "Kurumsal sistemlerde ürün implementasyonu ve entegrasyon süreçlerinin yürütülmesi",
+        "eBA İş Akış Yönetimi ve Former üzerinde süreç geliştirme çalışmaları",
+        "Rapor şablonlarının hazırlanması ve ürün testlerinin yapılması",
+      ],
     },
     {
-      period: "08.2023 – 11.2023",
-      title: "ManageEngine Developer",
-      place: "Palcon Bilişim Sistemleri",
-      description:
-        "Deluge ve Python scriptleriyle ITSM sistemlerinde arayüz ve back-end geliştirme; kurumsal iş akışı otomasyonları ve sistem entegrasyonu.",
-      type: "experience",
+      period: "12.2021 — 06.2022",
+      role: "Asistan Öğrenci",
+      org: "İstanbul Nişantaşı Üniversitesi",
+      bullets: [
+        "ERP süreç analizi, teknik dokümantasyon ve proje planlarının hazırlanması",
+        "“Nish Spor Sitesi” projesinde front-end ve back-end geliştirme",
+      ],
     },
-    {
-      period: "2024",
-      title: "TEKNOFEST Hava Savunma Sistemleri — Türkiye 8.'liği",
-      place: "T3 Vakfı",
-      description:
-        "Tehdit analizi ve otonom savunma tepkisi veren yerli sistem tasarımında takım kaptanlığı; Türkiye genelinde ilk 10'a girme başarısı.",
-      type: "leadership",
-    },
-    {
-      period: "11.2024 – 12.2024",
-      title: "Görüntü İşleme ve Yapay Zeka Uzmanı",
-      place: "Daz-Tech Innovation & Technology",
-      description:
-        "Savunma sanayisine yönelik akıllı analiz sistemleri; nesne tespiti, hedef takibi, anomali analizi ve karar destek sistemlerinde ML/DL tabanlı çözümler.",
-      type: "experience",
-    },
-    {
-      period: "03.2026 – 07.2026",
-      title: "IMU Stajyeri",
-      place: "TRC Marine Electronic",
-      description:
-        "Denizcilik elektroniği süreçlerinde Servis Pozitif Sistem yönetimi ve saha entegrasyonu; mikrodenetleyici tabanlı gömülü sistem yazılımı geliştirme.",
-      type: "experience",
-    },
-    {
-      period: "2026",
-      title: "Savunma Sanayi İçin İnsansız Su Altı Aracı & İnsansız Kara Aracı",
-      place: "TEKNOFEST",
-      description:
-        "Otonom hareket kabiliyetine sahip su altı ve kara platformlarında yazılım geliştirme, sensör entegrasyonu ve kontrol sistemleri.",
-      type: "leadership",
-    },
-  ] as TimelineItem[],
-  leadershipHeading: "Liderlik & Kulüp Deneyimi",
-  leadership: [
-    {
-      title: "Yazılım ve Bilişim Kulübü — Kurucu Başkan",
-      description: "+1000 üye yönetimi ve +50 teknik projenin koordinasyonu.",
-    },
-    {
-      title: "Teknofest Kulübü — Başkan Yardımcısı",
-      description: "Yarışma takımlarının kurulması, rapor takibi ve etkinlik yönetimi.",
-    },
-  ],
-  projectsHeading: "Öne Çıkan Projeler",
-  projectsKicker: "Donanım × Yazılım × Otonomi",
+  ] as ExperienceItem[],
+  roleLabel: "Rol",
   projects: [
     {
-      title: "TEKNOFEST Hava Savunma Sistemi",
-      year: "2024",
-      tags: ["C/C++", "Gömülü Sistem", "Bilgisayarlı Görü"],
-      description:
-        "Tehdit analizi ve otonom savunma tepkisi veren yerli sistem. Sensör ve mekanik haberleşme için C/C++ tabanlı algoritmalar geliştirdim; mikrodenetleyici entegrasyonuyla gerçek zamanlı hedef takibi sağladım. Bu projeyle Türkiye 8.'si oldum.",
+      no: "01",
+      title: "Hava Savunma Sistemi",
+      meta: "TEKNOFEST 2024 · Türkiye 8.'liği",
+      summary:
+        "Tehdit analizi yapan ve savunma tepkisi üretebilen sistem. Sensör verisi ile mekanik kontrol katmanı arasındaki haberleşme yazılımı geliştirildi.",
+      role: "Takım kaptanlığı, yazılım algoritmaları, kullanıcı arayüzü",
+      stack: ["C/C++", "Görüntü İşleme", "Mikrodenetleyici"],
       image: "/images/project-teamwork.jpg",
     },
     {
-      title: "Otonom Hedef Takip Kulesi — CAD & Prototip",
-      year: "2024 – 2026",
-      tags: ["Fusion 360", "3D Baskı", "Raspberry Pi"],
-      description:
-        "Fusion 360'ta sıfırdan modellenen, kamera ve kontrol elektroniğini barındıran dönebilir kule gövdesi. Flashforge Adventurer 5M Pro ile üretime hazır, ısı dengesi optimize edilmiş parçalar basıldı.",
-      image: "/images/cad-turret.jpg",
+      no: "02",
+      title: "Havacılıkta Yapay Zekâ",
+      meta: "TEKNOFEST 2026 · Finalist",
+      summary:
+        "Havacılık verileri üzerinde yapay zekâ uygulamalarına yönelik yarışma projesi. Finale kalan takımlar arasında yer alındı.",
+      role: "Model geliştirme, veri işleme",
+      stack: ["Python", "Derin Öğrenme"],
     },
     {
-      title: "İnsansız Su Altı & Kara Aracı",
-      year: "2026",
-      tags: ["Raspberry Pi", "Otonom Navigasyon", "Sensör Füzyonu"],
-      description:
-        "Zorlu arazi ve su altı koşullarında rota planlaması yapabilen, engel tespit edebilen otonom platformlar. Robotik donanım ve kontrol kartları C/C++ algoritmalarıyla eşzamanlı çalışacak şekilde programlandı.",
+      no: "03",
+      title: "İnsansız Su Altı Aracı",
+      meta: "TEKNOFEST 2026",
+      summary: "Su altı keşif ve görev operasyonlarına yönelik otonom araç.",
+      role: "Yazılım geliştirme, sensör entegrasyonu, kontrol sistemleri",
+      stack: ["Python", "Gömülü Sistemler"],
+    },
+    {
+      no: "04",
+      title: "İnsansız Kara Aracı",
+      meta: "TEKNOFEST 2026",
+      summary:
+        "Zorlu arazi koşullarında engel tespiti ve rota planlaması yapabilen otonom platform.",
+      role: "Otonom sürüş algoritmaları, robotik sistem entegrasyonu",
+      stack: ["Python", "Raspberry Pi", "Sensör Füzyonu"],
       image: "/images/hardware-wiring.jpg",
     },
     {
-      title: "Akıllı Tarım Sistemleri — \"Akıllı Tosunlar\"",
-      year: "2025",
-      tags: ["Arduino", "ESP32", "IoT", "n8n"],
-      description:
-        "Sahadaki sensör verilerinin toplanması için Arduino/ESP32 tabanlı mimari; veriler n8n üzerinden otomatik iş akışlarına bağlanarak uzaktan izlenebilir ve kontrol edilebilir hale getirildi.",
-      image: "/images/project-turret-final.jpg",
+      no: "05",
+      title: "Otonom Kule Mekaniği",
+      meta: "CAD ve 3D üretim",
+      summary:
+        "Kamera ve kontrol elektroniğini barındıran dönebilir kule gövdesi. Fusion 360 ile modellendi, 3D yazıcıda üretildi.",
+      role: "Mekanik tasarım, üretim, montaj",
+      stack: ["Fusion 360", "3D Baskı"],
+      image: "/images/cad-turret.jpg",
     },
     {
-      title: "Flight-Sim Kontrol Paneli",
-      year: "Kişisel Proje",
-      tags: ["Elektronik", "Maker", "Panel Tasarımı"],
-      description:
-        "Uçuş simülasyonu için sıfırdan tasarlanmış, anahtar ve düğmelerle donatılmış fiziksel kontrol paneli — donanım/yazılım entegrasyonu tutkusunun kişisel bir yansıması.",
+      no: "06",
+      title: "Akıllı Tarım Otomasyonu",
+      meta: "IoT · 2025",
+      summary:
+        "Saha sensör verilerinin toplanması ve n8n iş akışları üzerinden uzaktan izlenebilir hale getirilmesi.",
+      role: "Gömülü yazılım, otomasyon kurgusu",
+      stack: ["Arduino", "ESP32", "n8n"],
+    },
+    {
+      no: "07",
+      title: "Uçuş Simülasyonu Kontrol Paneli",
+      meta: "Kişisel çalışma",
+      summary:
+        "Anahtar ve düğme dizilimi sıfırdan tasarlanan fiziksel kontrol paneli.",
+      role: "Panel tasarımı, elektronik montaj",
+      stack: ["Elektronik", "Panel Üretimi"],
       image: "/images/panel-wide.png",
     },
   ] as ProjectItem[],
-  githubHeading: "Yazılım & Yapay Zeka Projelerim",
-  githubKicker: "github.com/Nakresss",
-  githubIntro:
-    "Sahadaki donanım projelerinin yanında, GitHub'da makine öğrenmesi ve bilgisayarlı görü odaklı yazılım projeleri geliştiriyorum.",
-  github: [
+  codeIntro: "GitHub üzerinde yayımlanan makine öğrenmesi ve görüntü işleme çalışmaları.",
+  repos: [
     {
-      title: "BoneScan-AI",
-      description:
-        "Röntgen görüntülerinde kemik kanseri belirtilerini otomatik tespit ederek erken teşhise destek olan yapay zeka destekli görüntü işleme sistemi.",
+      name: "BoneScan-AI",
+      summary: "Röntgen görüntülerinde kemik kanseri belirtilerinin tespitine yönelik görüntü işleme modeli.",
       url: "https://github.com/Nakresss/BoneScan-AI",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "BoardScanner",
-      description:
-        "Derin öğrenme ve görüntü işleme teknikleriyle devre kartları (PCB) üzerindeki elektronik bileşenleri otomatik tanıyan sistem.",
+      name: "BoardScanner",
+      summary: "Devre kartları üzerindeki elektronik bileşenlerin derin öğrenme ile tanınması.",
       url: "https://github.com/Nakresss/BoardScanner",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "Reinforcement-Learner",
-      description:
-        "CartPole-v1 ortamını pekiştirmeli öğrenme ile çözen bir Deep Q-Network (DQN) ajanı implementasyonu.",
+      name: "Reinforcement-Learner",
+      summary: "CartPole-v1 ortamını çözen Deep Q-Network ajanı.",
       url: "https://github.com/Nakresss/Reinforcement-Learner",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "Baloon-Detection",
-      description: "Görüntü işleme ve nesne tespiti tekniklerine odaklanan bir tespit projesi.",
+      name: "Baloon-Detection",
+      summary: "Nesne tespiti odaklı görüntü işleme çalışması.",
       url: "https://github.com/Nakresss/Baloon-Detection",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "Google-Colab-TPU-Usage",
-      description: "Google Colab üzerinde TPU kullanımına odaklanan, model eğitim verimliliğini artıran bir çalışma.",
+      name: "Google-Colab-TPU-Usage",
+      summary: "Colab ortamında TPU ile model eğitimi verimliliği üzerine çalışma.",
       url: "https://github.com/Nakresss/Google-Colab-TPU-Usage",
-      language: "Python",
+      lang: "Python",
     },
-  ] as GithubProjectItem[],
-  achievementsHeading: "Başarılar & Ödüller",
-  achievementsKicker: "Sahada ve Ringde Kazanılan Dereceler",
-  achievements: [
+  ] as RepoItem[],
+  reposAll: "Tüm depolar",
+  skills: [
+    { label: "Programlama", items: "Python, C/C++, OOP, SQL, Deluge" },
     {
-      title: "TEKNOFEST Hava Savunma Sistemleri Yarışması — Türkiye 8.'liği",
-      year: "2024",
-      description: "Havacılık, Uzay ve Teknoloji Festivali kapsamında geliştirilen proje ile Türkiye genelinde ilk 10'a girme başarısı.",
-    },
-    {
-      title: "Berlin Open Taekwondo Championship — Altın Madalya",
-      year: "2015",
-      description: "Avrupa sahnesinde şampiyonluk; uluslararası turnuva tecrübesi ve yüksek odaklanma disiplini.",
+      label: "Yapay Zekâ ve Veri Bilimi",
+      items:
+        "Makine öğrenmesi, derin öğrenme, görüntü işleme, NLP, büyük veri analitiği, veri madenciliği",
     },
     {
-      title: "Savate (Fransız Boksu) Türkiye Şampiyonası — Türkiye 3.'lüğü",
-      year: "2015",
-      description: "Disiplinli çalışmanın ve rekabetçi ortamda soğukkanlılığın somut bir göstergesi.",
-    },
-  ] as AchievementItem[],
-  internationalHeading: "Sahadaki Kriz Disiplini ve Küresel Vizyon",
-  internationalKicker: "Gerçek Hayatın Kaosu İçinde Çalışan Sistemler",
-  internationalBlocks: [
-    {
-      title: "Ağır Mekanik ve Kriz Yönetimi",
-      subtitle: "Gemi Makineleri Altyapısı",
-      description:
-        "Rusya hattındaki ticari gemilerde, açık denizlerin kısıtlı ve izole şartlarında ağır mekanik sistemlerin işletimi ve anlık arıza müdahalesi. Laboratuvar konforunda değil, gerçek hayatın kaotik ortamlarında bile sorunsuz çalışan sistemler inşa etme refleksi kazandırdı.",
-      image: "/images/maritime-bridge.jpg",
+      label: "Kütüphane ve Framework",
+      items: "TensorFlow, Keras, PyTorch, OpenCV, Scikit-Learn, Flask, Django",
     },
     {
-      title: "Yüksek Odak ve Uluslararası Temsil",
-      subtitle: "Berlin Open Şampiyonluğu",
-      description:
-        "Taekwondo branşında Berlin Open Altın Madalyası ve Avrupa sahnesinde uluslararası turnuva tecrübesi. TEKNOFEST gibi yüksek stresli arenalarda takım süreçlerini soğukkanlılıkla yönetebilme yeteneğinin temelini oluşturdu.",
-      image: "/images/taekwondo-celebration.jpg",
+      label: "Sistem ve Gömülü Yazılım",
+      items:
+        "Gömülü sistemler, Arduino, Raspberry Pi, Deneyap Kart, endüstriyel otomasyon",
+    },
+    {
+      label: "Araçlar ve Metodoloji",
+      items: "Git/GitHub, CI/CD, Google Cloud, MATLAB/Simulink, n8n, Glide, Agile & Scrum",
+    },
+    { label: "Tasarım", items: "Fusion 360, 3D modelleme ve prototipleme" },
+    {
+      label: "Diller",
+      items: "Türkçe (ana dil), İngilizce (%100 İngilizce lisans programı), Makedonca",
+    },
+  ] as SkillGroup[],
+  education: [
+    {
+      period: "2021 — 2026",
+      program: "Yönetim Bilişim Sistemleri (%100 İngilizce)",
+      school: "İstanbul Nişantaşı Üniversitesi",
+      detail:
+        "Sistem tasarımı, yazılım geliştirme, veritabanı yönetimi, iş zekâsı ve karar destek sistemleri.",
+    },
+    {
+      period: "2019 — 2021",
+      program: "Gemi Makineleri İşletme",
+      school: "Ordu Üniversitesi",
+      detail:
+        "Mekanik sistem işletimi, motor bakım ve onarımı, gemi güvenliği ve çevre koruma standartları.",
+    },
+  ] as EducationItem[],
+  certsLabel: "Sertifikalar",
+  certs: [
+    {
+      issuer: "Yapay Zekâ ve Veri Bilimi · Udemy",
+      items: [
+        {
+          name: "Machine Learning A-Z",
+          detail: "Denetimli ve denetimsiz öğrenme, regresyon, sınıflandırma, model değerlendirme.",
+        },
+        {
+          name: "Deep Learning A-Z",
+          detail: "Yapay sinir ağları, CNN ve RNN mimarileri.",
+        },
+        {
+          name: "Projelerle Yapay Zekâ ve Bilgisayarlı Görü",
+          detail: "OpenCV ile görüntü işleme uygulamaları.",
+        },
+      ],
+    },
+    {
+      issuer: "Python ve Web Geliştirme · Udemy",
+      items: [
+        {
+          name: "Sıfırdan İleri Seviye Python",
+          detail: "Temel sözdiziminden nesne yönelimli programlamaya Python geliştirme.",
+        },
+        {
+          name: "Python Django 5 ile Web Geliştirme",
+          detail: "MVT mimarisi, ORM ve REST tabanlı web uygulamaları.",
+        },
+        {
+          name: "Algoritma Geliştirme ve Programlamaya Giriş",
+          detail: "Algoritma kurgusu ve programlama temelleri.",
+        },
+      ],
+    },
+    {
+      issuer: "T3 Vakfı",
+      items: [
+        { name: "Hava Savunma Sistemleri Finalist Belgesi", detail: "2024" },
+        {
+          name: "Deneyap Kart TEKNOFEST Kulüp Eğitimleri",
+          detail: "2025 · Gömülü sistem ve sensör uygulamaları.",
+        },
+      ],
+    },
+    {
+      issuer: "Zirve ve Seminerler",
+      items: [
+        { name: "Milli Teknoloji Zirvesi Başarı Sertifikası", detail: "2026" },
+        { name: "Savunma Sanayii Akademi Kariyer Buluşmaları", detail: "2024" },
+        { name: "T3 Sınaps Kuantum Bilgisayarlar Semineri" },
+      ],
+    },
+  ] as CertGroup[],
+  awards: [
+    { year: "2024", title: "TEKNOFEST Hava Savunma Sistemleri Yarışması", detail: "Türkiye 8.'liği" },
+    { year: "2015", title: "Berlin Open Taekwondo Championship", detail: "Altın madalya" },
+    { year: "2015", title: "Savate (Fransız Boksu) Türkiye Şampiyonası", detail: "Türkiye 3.'lüğü" },
+  ],
+  leadershipLabel: "Liderlik",
+  leadership: [
+    {
+      title: "Kurucu Başkan · Yazılım ve Bilişim Kulübü",
+      detail: "1000+ üye, 50+ teknik projenin koordinasyonu.",
+    },
+    {
+      title: "Başkan Yardımcısı · Teknofest Kulübü",
+      detail: "Yarışma takımlarının kurulması, rapor takibi ve etkinlik yönetimi.",
     },
   ],
+  interestsLabel: "İlgi alanları",
+  interests: "Satranç, taekwondo ve savate, fotoğrafçılık, müzik.",
   contact: {
-    heading: "İletişim",
-    kicker: "Geleceğin Sistemlerini Birlikte İnşa Edelim",
-    intro:
-      "Sahadaki tecrübelerimi, teknik altyapımı ve projelerime kattığım değeri detaylandırmak üzere sizinle görüşmeyi sabırsızlıkla bekliyorum.",
-    formName: "Ad Soyad",
+    intro: "Proje ve iş birliği talepleri için:",
+    formName: "Ad soyad",
     formEmail: "E-posta",
-    formMessage: "Mesajınız",
-    formSend: "Mesaj Gönder",
-    formSending: "Yönlendiriliyor...",
-    formNote: "Mesajın varsayılan e-posta uygulamanız üzerinden gönderilir.",
-    downloadCv: "CV İndir (PDF)",
-    directTitle: "Doğrudan İletişim",
+    formMessage: "Mesaj",
+    formSend: "Gönder",
+    formNote: "Form, varsayılan e-posta uygulamanız üzerinden gönderim yapar.",
+    labels: { email: "E-posta", phone: "Telefon", location: "Konum" },
   },
-  footer: {
-    tagline: "Milli Teknoloji vizyonuyla, dijital ve fiziksel dünyayı birleştiren sistemler inşa ediyorum.",
-    rights: "Tüm hakları saklıdır.",
-    backToTop: "Yukarı Çık",
-  },
+  footer: { rights: "Tüm hakları saklıdır.", top: "Başa dön" },
 };
 
-export type Content = typeof contentTr;
-
-const contentEn: Content = {
+const en: typeof tr = {
   nav: {
-    about: "About",
-    skills: "Skills",
-    timeline: "Experience",
+    profile: "Profile",
+    experience: "Experience",
     projects: "Projects",
     code: "Software",
-    achievements: "Achievements",
+    skills: "Skills",
+    education: "Education",
     contact: "Contact",
-    cv: "Download CV",
+    cv: "CV",
   },
   hero: {
-    kicker: "Software & Systems Developer · Maker",
     name: "Serkan Acar",
-    tagline:
-      "A solution builder merging digital algorithms with physical mechanics, focused on the “National Technology” vision.",
-    quote:
-      "“I merge digital algorithms written at a desk with physical mechanics that run flawlessly out in the field.”",
-    ctaPrimary: "Explore My Projects",
-    ctaSecondary: "Get in Touch",
-    scroll: "Scroll down",
+    role: "Software Developer",
+    field: "Artificial Intelligence and Embedded Systems",
+    profile:
+      "Software developer with a degree in Management Information Systems. Project experience in Python application development, image processing and business process automation. Work focused on software–hardware integration across defence industry and enterprise software projects.",
+    metaLabels: {
+      location: "Location",
+      focus: "Focus",
+      languages: "Languages",
+      status: "Status",
+    },
+    metaValues: {
+      location: "Istanbul, Türkiye",
+      focus: "Image processing, automation",
+      languages: "Turkish, English, Macedonian",
+      status: "Open to new projects",
+    },
+    cta: "Contact",
+    cvCta: "Download CV (PDF)",
   },
-  about: {
-    heading: "About Me",
-    kicker: "System Architecture & Hybrid Infrastructure",
-    paragraphs: [
-      "I'm Serkan Acar, a systems developer who merges algorithms from the digital world with mechanics from the physical one.",
-      "My degree in Management Information Systems (100% English) gave me the ability to build complex software architectures and business processes; my background in Marine Engineering Operations taught me to speak the language of hardware and mechanical systems. I don't just write software at a desk — I go out into the field.",
-      "Working on commercial ships along the Russian coast (Rostov, Azov, Yeysk), in the confined and demanding conditions of open seas, I gained the discipline to solve problems calmly under crisis. My time studying in North Macedonia gave me fluency in Macedonian, and my Berlin Open Taekwondo championship broadened my international outlook early on.",
-      "Today I channel all of this technical background, field crisis-management experience, and international perspective into building indigenous, national systems in line with the “National Technology Initiative”.",
-    ],
-    stackHeading: "Technologies I Use",
-    stack: [
-      "C / C++",
-      "Python",
-      "SQL",
-      "TensorFlow / PyTorch",
-      "OpenCV",
-      "Raspberry Pi / ESP32 / Arduino",
-      "Fusion 360",
-      "n8n / Glide",
-      "Django / Flask",
-      "Git / CI/CD",
-    ],
+  sections: {
+    experience: "Experience",
+    projects: "Projects",
+    code: "Software Projects",
+    skills: "Skills",
+    education: "Education and Certificates",
+    awards: "Awards and Leadership",
+    contact: "Contact",
   },
-  skills: {
-    heading: "Skills",
-    kicker: "End-to-End Solution Capability",
-    categories: [
-      {
-        title: "Programming",
-        items: ["Python", "C", "C++", "OOP", "SQL", "Deluge", "VBA"],
-      },
-      {
-        title: "AI & Data Science",
-        items: [
-          "Machine Learning",
-          "Deep Learning",
-          "Image Processing",
-          "NLP",
-          "Big Data Analytics",
-          "Data Mining",
-        ],
-      },
-      {
-        title: "Libraries & Frameworks",
-        items: ["TensorFlow", "Keras", "PyTorch", "OpenCV", "Scikit-Learn", "Flask", "Django"],
-      },
-      {
-        title: "Systems & Embedded Software",
-        items: [
-          "Embedded Systems",
-          "Arduino",
-          "Raspberry Pi 5",
-          "ESP32",
-          "Deneyap Kart",
-          "Industrial Automation",
-        ],
-      },
-      {
-        title: "Design & Manufacturing",
-        items: ["Fusion 360", "3D Modeling", "Flashforge Adventurer 5M Pro", "Prototyping"],
-      },
-      {
-        title: "Tools & Methodologies",
-        items: ["Git / GitHub", "CI/CD", "Google Cloud", "MATLAB / Simulink", "Agile & Scrum", "n8n", "Glide"],
-      },
-    ] as SkillCategory[],
-  },
-  timelineHeading: "Experience & Education",
-  timelineKicker: "A Chronological Journey",
-  timeline: [
+  experience: [
     {
-      period: "2019 – 2021",
-      title: "Marine Engineering Operations",
-      place: "Ordu University",
-      description:
-        "Technical training focused on operating ship engines and mechanical systems, periodic maintenance, ship safety and environmental protection standards.",
-      type: "education",
+      period: "09.2021 — Present",
+      role: "Software and Systems Developer",
+      org: "Freelance",
+      bullets: [
+        "Development of automation and custom software solutions for business processes using Python, n8n and Glide",
+        "Production-ready 3D mechanical design and prototype modelling in Fusion 360",
+        "Design of end-to-end solutions in which software and hardware components operate together",
+      ],
     },
     {
-      period: "09.2021 – Present",
-      title: "Software & Systems Developer",
-      place: "Freelancer",
-      description:
-        "Building custom software and automation scenarios with Python, n8n and Glide. Designing 3D mechanical parts in Fusion 360 and delivering end-to-end solutions where digital and physical work as one.",
-      type: "experience",
+      period: "03.2026 — 07.2026",
+      role: "IMU Intern",
+      org: "TRC Marine Electronic",
+      bullets: [
+        "System tracking and field integration within maritime electronics processes",
+        "Participation in microcontroller-based embedded software development",
+        "Organisation of technical staff training",
+      ],
     },
     {
-      period: "12.2021 – 06.2022",
-      title: "Assistant Student",
-      place: "Istanbul Nişantaşı University",
-      description:
-        "Process analysis and technical documentation for ERP processes; active front-end and back-end development on the \"Nish Spor Sitesi\" project.",
-      type: "experience",
+      period: "11.2024 — 12.2024",
+      role: "Image Processing and AI Specialist (Project-based)",
+      org: "Daz-Tech Innovation & Technology",
+      bullets: [
+        "Development of object detection and target tracking algorithms for the defence industry",
+        "Creation of deep learning based anomaly analysis and decision support models",
+      ],
     },
     {
-      period: "2021 – 2026",
-      title: "Management Information Systems (100% English)",
-      place: "Istanbul Nişantaşı University",
-      description:
-        "Education focused on system design, software development, database management and business analysis; business intelligence, data analytics, decision support systems, cloud computing and mobile applications.",
-      type: "education",
+      period: "08.2023 — 11.2023",
+      role: "ManageEngine Developer",
+      org: "Palcon Information Systems",
+      bullets: [
+        "Interface and back-end development on the ManageEngine ITSM platform using Deluge and Python",
+        "Setup of automation and system integrations for enterprise workflows",
+      ],
     },
     {
-      period: "12.2022 – 06.2023",
-      title: "Intern",
-      place: "Yıldız Holding (Bizim Toptan)",
-      description:
-        "Product implementation and end-to-end integration on corporate systems; eBA workflow management and Former process management work.",
-      type: "experience",
+      period: "12.2022 — 06.2023",
+      role: "Intern",
+      org: "Yıldız Holding (Bizim Toptan)",
+      bullets: [
+        "Product implementation and integration processes on enterprise systems",
+        "Process development work on eBA Workflow Management and Former",
+        "Preparation of report templates and execution of product tests",
+      ],
     },
     {
-      period: "08.2023 – 11.2023",
-      title: "ManageEngine Developer",
-      place: "Palcon Information Systems",
-      description:
-        "Front-end and back-end development on ITSM systems using Deluge and Python scripts; designing enterprise workflow automations and system integrations.",
-      type: "experience",
+      period: "12.2021 — 06.2022",
+      role: "Student Assistant",
+      org: "Istanbul Nişantaşı University",
+      bullets: [
+        "ERP process analysis, technical documentation and project planning",
+        "Front-end and back-end development on the “Nish Spor Sitesi” project",
+      ],
     },
-    {
-      period: "2024",
-      title: "TEKNOFEST Air Defense Systems — 8th in Turkey",
-      place: "T3 Foundation",
-      description:
-        "Team captain for an indigenous system providing threat analysis and autonomous defense response; finished in the top 10 nationwide.",
-      type: "leadership",
-    },
-    {
-      period: "11.2024 – 12.2024",
-      title: "Image Processing & AI Specialist",
-      place: "Daz-Tech Innovation & Technology",
-      description:
-        "Intelligent analysis systems for the defense industry; ML/DL-based solutions for object detection, target tracking, anomaly analysis and decision support.",
-      type: "experience",
-    },
-    {
-      period: "03.2026 – 07.2026",
-      title: "IMU Intern",
-      place: "TRC Marine Electronic",
-      description:
-        "Service Positive System management and field integration in maritime electronics; active development of microcontroller-based embedded systems.",
-      type: "experience",
-    },
-    {
-      period: "2026",
-      title: "Unmanned Underwater Vehicle & Unmanned Ground Vehicle",
-      place: "TEKNOFEST",
-      description:
-        "Software development, sensor integration and control systems for autonomous underwater and ground platforms.",
-      type: "leadership",
-    },
-  ] as TimelineItem[],
-  leadershipHeading: "Leadership & Club Experience",
-  leadership: [
-    {
-      title: "Software & IT Club — Founding President",
-      description: "Managed 1000+ members and coordinated 50+ technical projects.",
-    },
-    {
-      title: "Teknofest Club — Vice President",
-      description: "Set up competition teams, tracked reports and managed events.",
-    },
-  ],
-  projectsHeading: "Featured Projects",
-  projectsKicker: "Hardware × Software × Autonomy",
+  ] as ExperienceItem[],
+  roleLabel: "Role",
   projects: [
     {
-      title: "TEKNOFEST Air Defense System",
-      year: "2024",
-      tags: ["C/C++", "Embedded Systems", "Computer Vision"],
-      description:
-        "An indigenous system providing threat analysis and autonomous defense response. I built C/C++ based algorithms for sensor and mechanical communication and delivered real-time target tracking through microcontroller integration — finishing 8th in Turkey.",
+      no: "01",
+      title: "Air Defence System",
+      meta: "TEKNOFEST 2024 · 8th in Türkiye",
+      summary:
+        "A system performing threat analysis and generating a defence response. Communication software between the sensor data and mechanical control layer was developed.",
+      role: "Team captain, software algorithms, user interface",
+      stack: ["C/C++", "Image Processing", "Microcontroller"],
       image: "/images/project-teamwork.jpg",
     },
     {
-      title: "Autonomous Target-Tracking Turret — CAD & Prototype",
-      year: "2024 – 2026",
-      tags: ["Fusion 360", "3D Printing", "Raspberry Pi"],
-      description:
-        "A rotating turret housing camera and control electronics, modeled from scratch in Fusion 360 and 3D printed on a Flashforge Adventurer 5M Pro with optimized thermal settings for production-ready parts.",
-      image: "/images/cad-turret.jpg",
+      no: "02",
+      title: "Artificial Intelligence in Aviation",
+      meta: "TEKNOFEST 2026 · Finalist",
+      summary:
+        "Competition project on artificial intelligence applications for aviation data. Selected among the finalist teams.",
+      role: "Model development, data processing",
+      stack: ["Python", "Deep Learning"],
     },
     {
-      title: "Unmanned Underwater & Ground Vehicle",
-      year: "2026",
-      tags: ["Raspberry Pi", "Autonomous Navigation", "Sensor Fusion"],
-      description:
-        "Autonomous platforms capable of route planning and obstacle detection in demanding terrain and underwater conditions. Robotic hardware and control boards were programmed to work in sync with custom C/C++ algorithms.",
+      no: "03",
+      title: "Unmanned Underwater Vehicle",
+      meta: "TEKNOFEST 2026",
+      summary: "Autonomous vehicle for underwater exploration and mission operations.",
+      role: "Software development, sensor integration, control systems",
+      stack: ["Python", "Embedded Systems"],
+    },
+    {
+      no: "04",
+      title: "Unmanned Ground Vehicle",
+      meta: "TEKNOFEST 2026",
+      summary:
+        "Autonomous platform capable of obstacle detection and route planning in demanding terrain.",
+      role: "Autonomous driving algorithms, robotic system integration",
+      stack: ["Python", "Raspberry Pi", "Sensor Fusion"],
       image: "/images/hardware-wiring.jpg",
     },
     {
-      title: "Smart Agriculture Systems — \"Akıllı Tosunlar\"",
-      year: "2025",
-      tags: ["Arduino", "ESP32", "IoT", "n8n"],
-      description:
-        "An Arduino/ESP32-based architecture for collecting field sensor data, connected to automated workflows via n8n for remote monitoring and control.",
-      image: "/images/project-turret-final.jpg",
+      no: "05",
+      title: "Autonomous Turret Mechanics",
+      meta: "CAD and 3D production",
+      summary:
+        "A rotating turret body housing camera and control electronics. Modelled in Fusion 360 and produced on a 3D printer.",
+      role: "Mechanical design, production, assembly",
+      stack: ["Fusion 360", "3D Printing"],
+      image: "/images/cad-turret.jpg",
     },
     {
-      title: "Flight-Sim Control Panel",
-      year: "Personal Project",
-      tags: ["Electronics", "Maker", "Panel Design"],
-      description:
-        "A physical control panel built from scratch for flight simulation, fitted with switches and buttons — a personal reflection of the passion for hardware/software integration.",
+      no: "06",
+      title: "Smart Agriculture Automation",
+      meta: "IoT · 2025",
+      summary:
+        "Collection of field sensor data and remote monitoring through n8n workflows.",
+      role: "Embedded software, automation design",
+      stack: ["Arduino", "ESP32", "n8n"],
+    },
+    {
+      no: "07",
+      title: "Flight Simulation Control Panel",
+      meta: "Personal work",
+      summary: "A physical control panel with switch and button layout designed from scratch.",
+      role: "Panel design, electronic assembly",
+      stack: ["Electronics", "Panel Production"],
       image: "/images/panel-wide.png",
     },
   ] as ProjectItem[],
-  githubHeading: "Software & AI Projects",
-  githubKicker: "github.com/Nakresss",
-  githubIntro:
-    "Alongside field hardware projects, I build machine learning and computer vision-focused software on GitHub.",
-  github: [
+  codeIntro: "Machine learning and image processing work published on GitHub.",
+  repos: [
     {
-      title: "BoneScan-AI",
-      description:
-        "An AI-powered image processing system that automatically detects bone cancer indicators in X-ray images, supporting early diagnosis.",
+      name: "BoneScan-AI",
+      summary: "Image processing model for detecting bone cancer indicators in X-ray images.",
       url: "https://github.com/Nakresss/BoneScan-AI",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "BoardScanner",
-      description:
-        "Uses deep learning and image processing to automatically identify electronic components on circuit boards (PCBs).",
+      name: "BoardScanner",
+      summary: "Recognition of electronic components on circuit boards using deep learning.",
       url: "https://github.com/Nakresss/BoardScanner",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "Reinforcement-Learner",
-      description:
-        "A Deep Q-Network (DQN) agent that solves the CartPole-v1 environment through reinforcement learning.",
+      name: "Reinforcement-Learner",
+      summary: "Deep Q-Network agent solving the CartPole-v1 environment.",
       url: "https://github.com/Nakresss/Reinforcement-Learner",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "Baloon-Detection",
-      description: "A detection-focused project centered on image processing and object detection techniques.",
+      name: "Baloon-Detection",
+      summary: "Image processing work focused on object detection.",
       url: "https://github.com/Nakresss/Baloon-Detection",
-      language: "Python",
+      lang: "Python",
     },
     {
-      title: "Google-Colab-TPU-Usage",
-      description: "A study on TPU utilization in Google Colab to improve model training efficiency.",
+      name: "Google-Colab-TPU-Usage",
+      summary: "Study on model training efficiency with TPU in the Colab environment.",
       url: "https://github.com/Nakresss/Google-Colab-TPU-Usage",
-      language: "Python",
+      lang: "Python",
     },
-  ] as GithubProjectItem[],
-  achievementsHeading: "Achievements & Awards",
-  achievementsKicker: "Podium Finishes, in the Field and in the Ring",
-  achievements: [
+  ] as RepoItem[],
+  reposAll: "All repositories",
+  skills: [
+    { label: "Programming", items: "Python, C/C++, OOP, SQL, Deluge" },
     {
-      title: "TEKNOFEST Air Defense Systems Competition — 8th in Turkey",
-      year: "2024",
-      description: "Finished in the national top 10 with a project developed for the Aviation, Space and Technology Festival.",
-    },
-    {
-      title: "Berlin Open Taekwondo Championship — Gold Medal",
-      year: "2015",
-      description: "Championship win on the European stage; international tournament experience and high-focus discipline.",
+      label: "AI and Data Science",
+      items:
+        "Machine learning, deep learning, image processing, NLP, big data analytics, data mining",
     },
     {
-      title: "Savate (French Boxing) Turkish Championship — 3rd in Turkey",
-      year: "2015",
-      description: "Concrete proof of disciplined training and composure under competitive pressure.",
-    },
-  ] as AchievementItem[],
-  internationalHeading: "Field Crisis Discipline & Global Vision",
-  internationalKicker: "Systems That Work in the Chaos of Real Life",
-  internationalBlocks: [
-    {
-      title: "Heavy Machinery & Crisis Management",
-      subtitle: "Marine Engineering Background",
-      description:
-        "Operating heavy mechanical systems and handling instant breakdowns on commercial ships along the Russian coast, in the confined, isolated conditions of the open sea. It built the reflex to construct systems that work flawlessly not in lab comfort, but in the chaos of real life.",
-      image: "/images/maritime-bridge.jpg",
+      label: "Libraries and Frameworks",
+      items: "TensorFlow, Keras, PyTorch, OpenCV, Scikit-Learn, Flask, Django",
     },
     {
-      title: "High Focus & International Representation",
-      subtitle: "Berlin Open Championship",
-      description:
-        "Gold medal at the Berlin Open in Taekwondo and international tournament experience on the European stage. It laid the foundation for managing team processes calmly in high-stress arenas like TEKNOFEST.",
-      image: "/images/taekwondo-celebration.jpg",
+      label: "Systems and Embedded Software",
+      items: "Embedded systems, Arduino, Raspberry Pi, Deneyap Kart, industrial automation",
+    },
+    {
+      label: "Tools and Methodology",
+      items: "Git/GitHub, CI/CD, Google Cloud, MATLAB/Simulink, n8n, Glide, Agile & Scrum",
+    },
+    { label: "Design", items: "Fusion 360, 3D modelling and prototyping" },
+    {
+      label: "Languages",
+      items: "Turkish (native), English (100% English degree programme), Macedonian",
+    },
+  ] as SkillGroup[],
+  education: [
+    {
+      period: "2021 — 2026",
+      program: "Management Information Systems (100% English)",
+      school: "Istanbul Nişantaşı University",
+      detail:
+        "System design, software development, database management, business intelligence and decision support systems.",
+    },
+    {
+      period: "2019 — 2021",
+      program: "Marine Engineering Operations",
+      school: "Ordu University",
+      detail:
+        "Mechanical system operation, engine maintenance and repair, ship safety and environmental protection standards.",
+    },
+  ] as EducationItem[],
+  certsLabel: "Certificates",
+  certs: [
+    {
+      issuer: "AI and Data Science · Udemy",
+      items: [
+        {
+          name: "Machine Learning A-Z",
+          detail: "Supervised and unsupervised learning, regression, classification, model evaluation.",
+        },
+        { name: "Deep Learning A-Z", detail: "Artificial neural networks, CNN and RNN architectures." },
+        {
+          name: "Applied AI and Computer Vision",
+          detail: "Image processing applications with OpenCV.",
+        },
+      ],
+    },
+    {
+      issuer: "Python and Web Development · Udemy",
+      items: [
+        {
+          name: "Python from Beginner to Advanced",
+          detail: "Python development from basic syntax to object-oriented programming.",
+        },
+        {
+          name: "Web Development with Python Django 5",
+          detail: "MVT architecture, ORM and REST-based web applications.",
+        },
+        {
+          name: "Introduction to Algorithms and Programming",
+          detail: "Algorithm design and programming fundamentals.",
+        },
+      ],
+    },
+    {
+      issuer: "T3 Foundation",
+      items: [
+        { name: "Air Defence Systems Finalist Certificate", detail: "2024" },
+        {
+          name: "Deneyap Kart TEKNOFEST Club Training",
+          detail: "2025 · Embedded systems and sensor applications.",
+        },
+      ],
+    },
+    {
+      issuer: "Summits and Seminars",
+      items: [
+        { name: "National Technology Summit Certificate of Achievement", detail: "2026" },
+        { name: "Defence Industry Academy Career Meetings", detail: "2024" },
+        { name: "T3 Sınaps Quantum Computers Seminar" },
+      ],
+    },
+  ] as CertGroup[],
+  awards: [
+    { year: "2024", title: "TEKNOFEST Air Defence Systems Competition", detail: "8th in Türkiye" },
+    { year: "2015", title: "Berlin Open Taekwondo Championship", detail: "Gold medal" },
+    { year: "2015", title: "Savate (French Boxing) Turkish Championship", detail: "3rd in Türkiye" },
+  ],
+  leadershipLabel: "Leadership",
+  leadership: [
+    {
+      title: "Founding President · Software and IT Club",
+      detail: "1000+ members, coordination of 50+ technical projects.",
+    },
+    {
+      title: "Vice President · Teknofest Club",
+      detail: "Formation of competition teams, report tracking and event management.",
     },
   ],
+  interestsLabel: "Interests",
+  interests: "Chess, taekwondo and savate, photography, music.",
   contact: {
-    heading: "Contact",
-    kicker: "Let's Build the Systems of the Future Together",
-    intro:
-      "I'd love to talk through my field experience, technical background, and the value I can bring to your projects.",
-    formName: "Full Name",
+    intro: "For project and collaboration enquiries:",
+    formName: "Full name",
     formEmail: "Email",
-    formMessage: "Your Message",
-    formSend: "Send Message",
-    formSending: "Redirecting...",
-    formNote: "Your message will be sent through your default email app.",
-    downloadCv: "Download CV (PDF)",
-    directTitle: "Direct Contact",
+    formMessage: "Message",
+    formSend: "Send",
+    formNote: "The form sends through your default email application.",
+    labels: { email: "Email", phone: "Phone", location: "Location" },
   },
-  footer: {
-    tagline: "Building systems that merge the digital and physical worlds, driven by the National Technology vision.",
-    rights: "All rights reserved.",
-    backToTop: "Back to top",
-  },
+  footer: { rights: "All rights reserved.", top: "Back to top" },
 };
 
 export function getContent(lang: Lang) {
-  return lang === "tr" ? contentTr : contentEn;
+  return lang === "tr" ? tr : en;
 }
+
+export type Content = typeof tr;

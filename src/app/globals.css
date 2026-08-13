@@ -1,83 +1,72 @@
 @import "tailwindcss";
 
 :root {
-  --background: #08090b;
-  --foreground: #f4f5f7;
-  --accent: #e30a17;
-  --accent-2: #38bdf8;
+  --paper: #f2f1ec;
+  --paper-2: #e9e7e0;
+  --ink: #14130f;
+  --ink-muted: #56534a;
+  --rule: rgba(20, 19, 15, 0.16);
+  --rule-soft: rgba(20, 19, 15, 0.08);
+  --accent: #b83a1e;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-rule: var(--rule);
+  --color-rule-soft: var(--rule-soft);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
   --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
   --font-mono: var(--font-mono);
 }
 
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  background: var(--paper);
 }
 
 body {
   overflow-x: hidden;
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
+  font-synthesis-weight: none;
 }
 
 ::selection {
-  background: var(--accent);
-  color: white;
+  background: var(--ink);
+  color: var(--paper);
 }
 
-::-webkit-scrollbar {
-  width: 10px;
+.label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
-::-webkit-scrollbar-track {
-  background: #0d0e11;
+.rule-top {
+  border-top: 1px solid var(--rule);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #2a2d33;
-  border-radius: 999px;
+.link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--rule);
+  transition: text-decoration-color 0.2s;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3a3e46;
+.link-underline:hover {
+  text-decoration-color: var(--accent);
 }
 
-.circuit-line {
-  stroke-dasharray: 12 10;
-  animation: dash-flow 6s linear infinite;
-}
-
-.circuit-node {
-  animation: node-pulse 3s ease-in-out infinite;
-}
-
-@keyframes dash-flow {
-  to {
-    stroke-dashoffset: -220;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-}
-
-@keyframes node-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-    r: 2.5;
-  }
-  50% {
-    opacity: 1;
-    r: 4;
-  }
-}
-
-.text-balance {
-  text-wrap: balance;
 }

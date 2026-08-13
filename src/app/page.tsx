@@ -1,11 +1,11 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Timeline from "@/components/Timeline";
+import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
-import GithubProjects from "@/components/GithubProjects";
-import Achievements from "@/components/Achievements";
+import Code from "@/components/Code";
+import Skills from "@/components/Skills";
+import Education from "@/components/Education";
+import Awards from "@/components/Awards";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -15,12 +15,12 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        <About />
-        <Skills />
-        <Timeline />
+        <Experience />
         <Projects />
-        <GithubProjects />
-        <Achievements />
+        <Code />
+        <Skills />
+        <Education />
+        <Awards />
         <Contact />
       </main>
       <Footer />

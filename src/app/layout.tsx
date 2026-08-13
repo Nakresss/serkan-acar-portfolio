@@ -1,35 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/language-context";
-import CircuitBackground from "@/components/CircuitBackground";
 
-const inter = Inter({
+const archivo = Archivo({
   variable: "--font-sans",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   variable: "--font-mono",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Serkan Acar — Software & Systems Developer",
+  title: "Serkan Acar — Yazılım Geliştirici",
   description:
-    "Serkan Acar | Yazılım & Sistem Geliştirici, Maker. TEKNOFEST projeleri, yapay zeka, gömülü sistem ve otonom araç geliştirme portföyü.",
-  metadataBase: new URL("https://serkanacar.dev"),
+    "Serkan Acar. Yazılım geliştirici; yapay zekâ, görüntü işleme ve gömülü sistemler. Deneyim, projeler, yetkinlikler ve iletişim bilgileri.",
   openGraph: {
-    title: "Serkan Acar — Software & Systems Developer",
+    title: "Serkan Acar — Yazılım Geliştirici",
     description:
-      "Dijital algoritmaları fiziksel mekaniklerle birleştiren, Milli Teknoloji vizyonuna odaklı sistem geliştirici.",
-    images: ["/images/hero-speaking.jpg"],
-    type: "website",
+      "Yapay zekâ, görüntü işleme ve gömülü sistemler alanında proje deneyimi.",
+    type: "profile",
   },
 };
 
@@ -41,13 +35,10 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <LanguageProvider>
-          <CircuitBackground />
-          {children}
-        </LanguageProvider>
+      <body className="min-h-full flex flex-col bg-paper text-ink">
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

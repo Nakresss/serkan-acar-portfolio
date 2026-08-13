@@ -1,98 +1,74 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 import { getContent } from "@/lib/content";
 
 export default function Hero() {
   const { lang } = useLanguage();
   const t = getContent(lang);
+  const m = t.hero;
+
+  const meta = [
+    [m.metaLabels.location, m.metaValues.location],
+    [m.metaLabels.focus, m.metaValues.focus],
+    [m.metaLabels.languages, m.metaValues.languages],
+    [m.metaLabels.status, m.metaValues.status],
+  ];
 
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden pt-24">
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero-speaking.jpg"
-          alt="Serkan Acar, TEKNOFEST etkinliğinde konuşma yaparken"
-          fill
-          priority
-          className="object-cover object-[70%_30%] opacity-45"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08090b] via-[#08090b]/85 to-[#08090b]/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#08090b] via-transparent to-[#08090b]/60" />
-      </div>
+    <section id="profile" className="scroll-mt-14">
+      <div className="mx-auto w-full max-w-5xl px-6 pt-24 pb-14 md:pt-32 md:pb-20">
+        <p className="label">
+          {m.role} · {m.field}
+        </p>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-5">
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent-2"
-        >
-          {t.hero.kicker}
-        </motion.p>
+        <h1 className="mt-5 text-[clamp(3.25rem,13vw,8.5rem)] font-extrabold leading-[0.86] tracking-[-0.045em]">
+          Serkan
+          <br />
+          Acar
+        </h1>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-[family-name:var(--font-display)] text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl"
-        >
-          {t.hero.name}
-        </motion.h1>
+        <div className="mt-10 grid gap-8 border-t border-rule pt-8 md:grid-cols-[1.35fr_1fr] md:gap-12">
+          <p className="max-w-xl text-[0.975rem] leading-relaxed text-ink-muted">{m.profile}</p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-6 max-w-2xl text-balance text-lg text-gray-300 sm:text-xl"
-        >
-          {t.hero.tagline}
-        </motion.p>
+          <div className="relative aspect-[4/5] w-full max-w-[16rem] overflow-hidden bg-paper-2 md:justify-self-end">
+            <Image
+              src="/images/about-portrait.jpg"
+              alt="Serkan Acar"
+              fill
+              priority
+              sizes="(max-width: 768px) 70vw, 256px"
+              className="object-cover object-top grayscale transition-[filter] duration-500 hover:grayscale-0"
+            />
+          </div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-4 max-w-xl border-l-2 border-accent/60 pl-4 text-sm italic text-gray-400 sm:text-base"
-        >
-          {t.hero.quote}
-        </motion.p>
+        <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-rule pt-6 md:grid-cols-4">
+          {meta.map(([label, value]) => (
+            <div key={label}>
+              <dt className="label">{label}</dt>
+              <dd className="mt-1.5 text-sm leading-snug">{value}</dd>
+            </div>
+          ))}
+        </dl>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <a
-            href="#projects"
-            className="group flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(227,10,23,0.4)] transition-transform hover:scale-105"
-          >
-            {t.hero.ctaPrimary}
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </a>
+        <div className="mt-10 flex flex-wrap gap-3">
           <a
             href="#contact"
-            className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/5"
+            className="border border-ink bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-transparent hover:text-ink"
           >
-            {t.hero.ctaSecondary}
+            {m.cta}
           </a>
-        </motion.div>
+          <a
+            href="/cv/Serkan-Acar-CV.pdf"
+            download
+            className="border border-rule px-5 py-2.5 text-sm font-medium transition-colors hover:border-ink"
+          >
+            {m.cvCta}
+          </a>
+        </div>
       </div>
-
-      <motion.a
-        href="#about"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-xs text-gray-400"
-      >
-        {t.hero.scroll}
-        <ArrowDown size={16} />
-      </motion.a>
     </section>
   );
 }

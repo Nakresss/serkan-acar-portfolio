@@ -3,33 +3,21 @@
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
-interface ScrollRevealProps {
-  children: ReactNode;
-  delay?: number;
-  className?: string;
-  direction?: "up" | "left" | "right" | "none";
-}
-
-const offsets = {
-  up: { x: 0, y: 40 },
-  left: { x: -40, y: 0 },
-  right: { x: 40, y: 0 },
-  none: { x: 0, y: 0 },
-};
-
 export default function ScrollReveal({
   children,
   delay = 0,
   className,
-  direction = "up",
-}: ScrollRevealProps) {
-  const offset = offsets[direction];
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: offset.x, y: offset.y }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.45, delay, ease: [0.22, 0.61, 0.36, 1] }}
       className={className}
     >
       {children}
