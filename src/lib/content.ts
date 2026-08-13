@@ -1,4 +1,4 @@
-import type { Lang } from "./language-context";
+import type { Lang } from "./i18n";
 
 export interface ExperienceItem {
   period: string;
@@ -373,8 +373,17 @@ const tr = {
     formEmail: "E-posta",
     formMessage: "Mesaj",
     formSend: "Gönder",
-    formNote: "Form, varsayılan e-posta uygulamanız üzerinden gönderim yapar.",
+    formSending: "Gönderiliyor…",
+    formSuccess: "Mesajınız iletildi. En kısa sürede dönüş yapılacaktır.",
+    formError: "Mesaj gönderilemedi. Doğrudan e-posta ile yazabilirsiniz.",
+    formFallback: "E-posta uygulamanız açılıyor…",
+    formNote: "Mesajlar doğrudan e-posta adresime iletilir.",
     labels: { email: "E-posta", phone: "Telefon", location: "Konum" },
+  },
+  projectPage: {
+    back: "Projeler",
+    detail: "Detay",
+    stackLabel: "Teknolojiler",
   },
   footer: { rights: "Tüm hakları saklıdır.", top: "Başa dön" },
 };
@@ -698,8 +707,17 @@ const en: typeof tr = {
     formEmail: "Email",
     formMessage: "Message",
     formSend: "Send",
-    formNote: "The form sends through your default email application.",
+    formSending: "Sending…",
+    formSuccess: "Your message has been sent. You will receive a reply shortly.",
+    formError: "The message could not be sent. Please write directly by email.",
+    formFallback: "Opening your email application…",
+    formNote: "Messages are delivered directly to my email address.",
     labels: { email: "Email", phone: "Phone", location: "Location" },
+  },
+  projectPage: {
+    back: "Projects",
+    detail: "Detail",
+    stackLabel: "Technologies",
   },
   footer: { rights: "All rights reserved.", top: "Back to top" },
 };

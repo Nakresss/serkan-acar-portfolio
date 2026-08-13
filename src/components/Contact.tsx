@@ -12,12 +12,49 @@ export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [company, setCompany] = useState(""); // honeypot
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback" | "error">(
+    "idle"
+  );
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const openMailClient = () => {
     const subject = encodeURIComponent(`${name} — portfolyo sitesi`);
     const body = encodeURIComponent(`${message}\n\n${name}\n${email}`);
     window.location.href = `mailto:${socials.email}?subject=${subject}&body=${body}`;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, company }),
+      });
+
+      if (res.ok) {
+        setStatus("sent");
+        setName("");
+        setEmail("");
+        setMessage("");
+        return;
+      }
+
+      // Mail delivery not configured yet — hand off to the visitor's mail app.
+      if (res.status === 503) {
+        setStatus("fallback");
+        openMailClient();
+        return;
+      }
+
+      setStatus("error");
+    } catch {
+      setStatus("fallback");
+      openMailClient();
+    }
   };
 
   const field =
@@ -113,13 +150,34 @@ export default function Contact() {
             className={`${field} resize-none`}
           />
         </div>
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          className="absolute left-[-9999px] h-0 w-0 opacity-0"
+        />
+
         <button
           type="submit"
-          className="border border-ink bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-transparent hover:text-ink"
+          disabled={status === "sending"}
+          className="border border-ink bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-transparent hover:text-ink disabled:opacity-50 disabled:hover:bg-ink disabled:hover:text-paper"
         >
-          {t.contact.formSend}
+          {status === "sending" ? t.contact.formSending : t.contact.formSend}
         </button>
-        <p className="text-xs text-ink-muted">{t.contact.formNote}</p>
+
+        <p aria-live="polite" className="text-xs text-ink-muted">
+          {status === "sent"
+            ? t.contact.formSuccess
+            : status === "error"
+              ? t.contact.formError
+              : status === "fallback"
+                ? t.contact.formFallback
+                : t.contact.formNote}
+        </p>
       </form>
     </Section>
   );

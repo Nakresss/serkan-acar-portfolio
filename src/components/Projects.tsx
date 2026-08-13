@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { getContent } from "@/lib/content";
+import { projectSlugs } from "@/lib/project-details";
 import Section from "./Section";
 import ScrollReveal from "./ScrollReveal";
 
@@ -22,7 +24,14 @@ export default function Projects() {
                     <span className="font-[family-name:var(--font-mono)] text-xs text-accent">
                       {p.no}
                     </span>
-                    <h3 className="text-[1.0625rem] font-semibold tracking-tight">{p.title}</h3>
+                    <h3 className="text-[1.0625rem] font-semibold tracking-tight">
+                      <Link
+                        href={`/${lang}/projects/${projectSlugs[p.no]}`}
+                        className="link-underline"
+                      >
+                        {p.title}
+                      </Link>
+                    </h3>
                   </div>
                   <p className="label mt-1.5">{p.meta}</p>
                   <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-muted">{p.summary}</p>
@@ -40,6 +49,12 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
+                  <Link
+                    href={`/${lang}/projects/${projectSlugs[p.no]}`}
+                    className="label mt-4 inline-block transition-colors hover:text-ink"
+                  >
+                    {t.projectPage.detail} →
+                  </Link>
                 </div>
 
                 {p.image && (

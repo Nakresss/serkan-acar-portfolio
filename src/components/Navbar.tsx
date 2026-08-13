@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { getContent } from "@/lib/content";
 
 export default function Navbar() {
-  const { lang, toggle } = useLanguage();
+  const { lang, other, otherHref } = useLanguage();
   const t = getContent(lang);
   const [open, setOpen] = useState(false);
 
@@ -16,21 +17,22 @@ export default function Navbar() {
     };
   }, [open]);
 
+  const base = `/${lang}`;
   const links = [
-    { href: "#experience", label: t.nav.experience },
-    { href: "#projects", label: t.nav.projects },
-    { href: "#code", label: t.nav.code },
-    { href: "#skills", label: t.nav.skills },
-    { href: "#education", label: t.nav.education },
-    { href: "#contact", label: t.nav.contact },
+    { href: `${base}#experience`, label: t.nav.experience },
+    { href: `${base}#projects`, label: t.nav.projects },
+    { href: `${base}#code`, label: t.nav.code },
+    { href: `${base}#skills`, label: t.nav.skills },
+    { href: `${base}#education`, label: t.nav.education },
+    { href: `${base}#contact`, label: t.nav.contact },
   ];
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-rule bg-paper/95 backdrop-blur-sm">
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-3">
-        <a href="#profile" className="text-sm font-semibold tracking-tight">
+        <Link href={base} className="text-sm font-semibold tracking-tight">
           Serkan Acar
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-6 lg:flex">
           {links.map((l) => (
@@ -45,13 +47,14 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button
-            onClick={toggle}
+          <Link
+            href={otherHref}
+            hrefLang={other}
             aria-label="Change language"
             className="font-[family-name:var(--font-mono)] text-xs text-ink-muted transition-colors hover:text-ink"
           >
-            {lang === "tr" ? "EN" : "TR"}
-          </button>
+            {other.toUpperCase()}
+          </Link>
           <a
             href="/cv/Serkan-Acar-CV.pdf"
             download

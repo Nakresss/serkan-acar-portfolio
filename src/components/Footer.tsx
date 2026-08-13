@@ -13,7 +13,7 @@ export default function Footer() {
         <p className="label">
           © {new Date().getFullYear()} Serkan Acar · {t.footer.rights}
         </p>
-        <a href="#profile" className="label transition-colors hover:text-ink">
+        <a href={`/${lang}#profile`} className="label transition-colors hover:text-ink">
           {t.footer.top} ↑
         </a>
       </div>
