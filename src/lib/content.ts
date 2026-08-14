@@ -369,15 +369,6 @@ const tr = {
   interests: "Satranç, taekwondo ve savate, fotoğrafçılık, müzik.",
   contact: {
     intro: "Proje ve iş birliği talepleri için:",
-    formName: "Ad soyad",
-    formEmail: "E-posta",
-    formMessage: "Mesaj",
-    formSend: "Gönder",
-    formSending: "Gönderiliyor…",
-    formSuccess: "Mesajınız iletildi. En kısa sürede dönüş yapılacaktır.",
-    formError: "Mesaj gönderilemedi. Doğrudan e-posta ile yazabilirsiniz.",
-    formFallback: "E-posta uygulamanız açılıyor…",
-    formNote: "Mesajlar doğrudan e-posta adresime iletilir.",
     labels: { email: "E-posta", phone: "Telefon", location: "Konum" },
   },
   projectPage: {
@@ -703,15 +694,6 @@ const en: typeof tr = {
   interests: "Chess, taekwondo and savate, photography, music.",
   contact: {
     intro: "For project and collaboration enquiries:",
-    formName: "Full name",
-    formEmail: "Email",
-    formMessage: "Message",
-    formSend: "Send",
-    formSending: "Sending…",
-    formSuccess: "Your message has been sent. You will receive a reply shortly.",
-    formError: "The message could not be sent. Please write directly by email.",
-    formFallback: "Opening your email application…",
-    formNote: "Messages are delivered directly to my email address.",
     labels: { email: "Email", phone: "Phone", location: "Location" },
   },
   projectPage: {
