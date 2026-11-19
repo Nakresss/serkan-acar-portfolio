@@ -15,6 +15,7 @@ export const tr: Content = {
       { id: "sahadan", label: "Sahadan" },
       { id: "yazilim", label: "Yazılım" },
       { id: "egitim", label: "Eğitim" },
+      { id: "sertifikalar", label: "Sertifikalar" },
       { id: "iletisim", label: "İletişim" },
     ],
     cv: "CV",
@@ -642,8 +643,12 @@ export const tr: Content = {
         detail: "Mekanik sistem işletimi, motor bakım ve onarımı, gemi güvenliği.",
       },
     ],
-    certsTitle: "Sertifikalar",
-    certs: [
+  },
+  certificates: {
+    title: "Sertifikalar",
+    intro: "Eğitim, yarışma ve seminerlerden aldığım belgeler. PDF işaretli olanlara tıklayarak belgenin kendisini açabilirsiniz.",
+    file: "PDF",
+    groups: [
       {
         issuer: "Udemy · Yapay zekâ",
         items: [

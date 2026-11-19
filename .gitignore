@@ -44,3 +44,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# certificate inbox: originals dropped here, published copies live in public/certs
+/sertifikalar/

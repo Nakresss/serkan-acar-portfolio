@@ -153,8 +153,13 @@ export interface Content {
   education: {
     title: string;
     items: EducationItem[];
-    certsTitle: string;
-    certs: CertGroup[];
+  };
+  certificates: {
+    title: string;
+    intro: string;
+    /** Marker shown next to items that link to a certificate file. */
+    file: string;
+    groups: CertGroup[];
   };
   awards: {
     title: string;

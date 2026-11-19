@@ -15,6 +15,7 @@ export const en: Content = {
       { id: "sahadan", label: "From the Field" },
       { id: "yazilim", label: "Software" },
       { id: "egitim", label: "Education" },
+      { id: "sertifikalar", label: "Certificates" },
       { id: "iletisim", label: "Contact" },
     ],
     cv: "CV",
@@ -642,8 +643,12 @@ export const en: Content = {
         detail: "Operation of mechanical systems, engine maintenance and repair, and ship safety.",
       },
     ],
-    certsTitle: "Certificates",
-    certs: [
+  },
+  certificates: {
+    title: "Certificates",
+    intro: "Certificates from courses, competitions and seminars. Items marked PDF open the certificate itself.",
+    file: "PDF",
+    groups: [
       {
         issuer: "Udemy · Artificial intelligence",
         items: [

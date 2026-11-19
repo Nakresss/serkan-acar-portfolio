@@ -10,6 +10,7 @@ import Field from "@/components/sections/Field";
 import Software from "@/components/sections/Software";
 import Skills from "@/components/sections/Skills";
 import Background from "@/components/sections/Background";
+import Certificates from "@/components/sections/Certificates";
 import Contact from "@/components/sections/Contact";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -62,6 +63,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <Software software={t.software} />
       <Skills skills={t.skills} />
       <Background education={t.education} awards={t.awards} />
+      <Certificates certificates={t.certificates} />
       <Contact contact={t.contact} location={t.hero.location} />
     </>
   );

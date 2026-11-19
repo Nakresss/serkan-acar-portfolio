@@ -2,7 +2,7 @@ import type { Content } from "@/content/types";
 import Reveal from "@/components/motion/Reveal";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-/** Education, certificates, awards and clubs, set as two columns. */
+/** Education, awards and clubs, set as two columns. */
 export default function Background({
   education,
   awards,
@@ -37,29 +37,6 @@ export default function Background({
                 </Reveal>
               ))}
             </ol>
-
-            <h3 className="mono mt-16 text-ink-3">{education.certsTitle}</h3>
-            <div className="mt-5 grid gap-x-8 gap-y-8 sm:grid-cols-2">
-              {education.certs.map((group) => (
-                <Reveal key={group.issuer} className="border-t border-rule pt-4">
-                  <p className="font-semibold">{group.issuer}</p>
-                  <ul className="mt-3 space-y-2 text-ink-2">
-                    {group.items.map((c) => (
-                      <li key={c.name} className="flex justify-between gap-4 leading-snug">
-                        {c.href ? (
-                          <a href={c.href} target="_blank" rel="noopener" className="link">
-                            {c.name}
-                          </a>
-                        ) : (
-                          <span>{c.name}</span>
-                        )}
-                        {c.year && <span className="mono shrink-0 pt-0.5 text-ink-3">{c.year}</span>}
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              ))}
-            </div>
           </div>
 
           <aside aria-labelledby="awards-title" className="lg:col-span-4 lg:col-start-9">
