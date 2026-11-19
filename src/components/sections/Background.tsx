@@ -46,7 +46,13 @@ export default function Background({
                   <ul className="mt-3 space-y-2 text-ink-2">
                     {group.items.map((c) => (
                       <li key={c.name} className="flex justify-between gap-4 leading-snug">
-                        <span>{c.name}</span>
+                        {c.href ? (
+                          <a href={c.href} target="_blank" rel="noopener" className="link">
+                            {c.name}
+                          </a>
+                        ) : (
+                          <span>{c.name}</span>
+                        )}
                         {c.year && <span className="mono shrink-0 pt-0.5 text-ink-3">{c.year}</span>}
                       </li>
                     ))}

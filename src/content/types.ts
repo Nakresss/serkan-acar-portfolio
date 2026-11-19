@@ -88,7 +88,8 @@ export interface EducationItem {
 
 export interface CertGroup {
   issuer: string;
-  items: { name: string; year?: string }[];
+  /** `href` links to the certificate file under /public. */
+  items: { name: string; year?: string; href?: string }[];
 }
 
 export interface Award {

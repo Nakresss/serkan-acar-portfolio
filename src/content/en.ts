@@ -663,6 +663,11 @@ export const en: Content = {
       {
         issuer: "T3 Foundation",
         items: [
+          {
+            name: "Artificial Intelligence in Aviation Finalist Certificate",
+            year: "2026",
+            href: "/certs/teknofest-2026-havacilikta-yapay-zeka-finalist.pdf",
+          },
           { name: "Air Defence Systems Finalist Certificate", year: "2024" },
           { name: "Deneyap Kart TEKNOFEST Club Training", year: "2025" },
         ],

@@ -663,6 +663,11 @@ export const tr: Content = {
       {
         issuer: "T3 Vakfı",
         items: [
+          {
+            name: "Havacılıkta Yapay Zekâ Finalist Belgesi",
+            year: "2026",
+            href: "/certs/teknofest-2026-havacilikta-yapay-zeka-finalist.pdf",
+          },
           { name: "Hava Savunma Sistemleri Finalist Belgesi", year: "2024" },
           { name: "Deneyap Kart TEKNOFEST Kulüp Eğitimleri", year: "2025" },
         ],
