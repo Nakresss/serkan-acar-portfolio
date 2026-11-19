@@ -64,7 +64,7 @@ export const en: Content = {
         since: "2026–2027",
         title: "Master's degree",
         place: "Artificial Intelligence Engineering, INU",
-        text: "Taking the computer vision and deep learning methods I already use in the field further, on the academic side.",
+        text: "I build on the computer vision and deep learning methods I use in the field through academic study.",
       },
     ],
   },
