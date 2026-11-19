@@ -1,18 +1,13 @@
 import { ImageResponse } from "next/og";
-import type { Lang } from "@/lib/i18n";
+import { getContent, isLang } from "@/content";
 
 export const alt = "Serkan Acar";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const copy = {
-  tr: { role: "Yazılım Geliştirici", field: "Yapay zekâ · Görüntü işleme · Gömülü sistemler" },
-  en: { role: "Software Developer", field: "AI · Image processing · Embedded systems" },
-} as const;
-
 export default async function Image({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const t = copy[(lang as Lang) in copy ? (lang as Lang) : "tr"];
+  const { meta } = getContent(isLang(lang) ? lang : "tr");
 
   return new ImageResponse(
     (
@@ -23,48 +18,37 @@ export default async function Image({ params }: { params: Promise<{ lang: string
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#f2f1ec",
-          color: "#14130f",
-          padding: "72px 80px",
+          background: "#edeae2",
+          color: "#161511",
+          padding: "64px 72px",
           fontFamily: "sans-serif",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            fontSize: 26,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            color: "#56534a",
-          }}
-        >
-          {t.role}
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, color: "#4a473f" }}>
+          <span>{meta.ogRole}</span>
+          <span>İstanbul</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              fontSize: 150,
-              fontWeight: 800,
-              letterSpacing: -6,
-              lineHeight: 1,
-            }}
-          >
-            Serkan Acar
+          <div style={{ display: "flex", fontSize: 168, fontWeight: 800, letterSpacing: -8, lineHeight: 0.9 }}>
+            Serkan
           </div>
-          <div
-            style={{
-              display: "flex",
-              marginTop: 34,
-              height: 5,
-              width: 190,
-              background: "#b83a1e",
-            }}
-          />
+          <div style={{ display: "flex", fontSize: 168, fontWeight: 800, letterSpacing: -8, lineHeight: 0.9 }}>
+            Acar<span style={{ color: "#e0531b" }}>.</span>
+          </div>
         </div>
 
-        <div style={{ display: "flex", fontSize: 30, color: "#56534a" }}>{t.field}</div>
+        <div
+          style={{
+            display: "flex",
+            borderTop: "2px solid rgba(22,21,17,0.15)",
+            paddingTop: 24,
+            fontSize: 28,
+            color: "#4a473f",
+          }}
+        >
+          {meta.ogField}
+        </div>
       </div>
     ),
     { ...size }

@@ -1,72 +1,239 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f2f1ec;
-  --paper-2: #e9e7e0;
-  --ink: #14130f;
-  --ink-muted: #56534a;
-  --rule: rgba(20, 19, 15, 0.16);
-  --rule-soft: rgba(20, 19, 15, 0.08);
-  --accent: #b83a1e;
+  --paper: #edeae2;
+  --paper-2: #e3dfd4;
+  --ink: #161511;
+  --ink-2: #4a473f;
+  --ink-3: #6b675e;
+  --rule: rgb(22 21 17 / 0.14);
+  --night: #131210;
+  --night-2: #1d1c19;
+  --fog: #e9e6dd;
+  --fog-2: #a6a297;
+  --fog-rule: rgb(233 230 221 / 0.14);
+  /* Signal orange. Large text / marks only on paper; use --accent-ink for small text. */
+  --accent: #e0531b;
+  --accent-ink: #a63b0c;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
   --color-paper: var(--paper);
   --color-paper-2: var(--paper-2);
   --color-ink: var(--ink);
-  --color-ink-muted: var(--ink-muted);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
   --color-rule: var(--rule);
-  --color-rule-soft: var(--rule-soft);
+  --color-night: var(--night);
+  --color-night-2: var(--night-2);
+  --color-fog: var(--fog);
+  --color-fog-2: var(--fog-2);
+  --color-fog-rule: var(--fog-rule);
   --color-accent: var(--accent);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --breakpoint-xs: 30rem;
 }
 
 html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
   background: var(--paper);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  overflow-x: hidden;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-synthesis-weight: none;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent);
+  color: #fff;
 }
 
-.label {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
-.rule-top {
-  border-top: 1px solid var(--rule);
+/* Wide, heavy cut of Archivo used for the name and section titles. */
+.display {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-stretch: 118%;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
 }
 
-.link-underline {
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* Paper grain. Kept very faint so it reads as texture, not as an effect. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.45s var(--ease-out);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-size: 100% 1px;
+}
+
+.link-static {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--rule);
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
   transition: text-decoration-color 0.2s;
 }
 
-.link-underline:hover {
+.link-static:hover {
   text-decoration-color: var(--accent);
+}
+
+/* ---------- Load-in animation for the hero (CSS only, runs before hydration) ---------- */
+
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.rise {
+  display: block;
+  animation: rise 1.1s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+
+.fade {
+  animation: fade 0.9s ease-out both;
+  animation-delay: var(--d, 0s);
+}
+
+.unveil {
+  animation: unveil 1.3s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+
+.unveil img {
+  animation: settle 1.8s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes rise {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.6rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes unveil {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.18);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Inline project covers: shown on small screens and on any touch device, where the hover preview cannot fire. */
+@media (hover: hover) and (pointer: fine) and (min-width: 48rem) {
+  .touch-cover {
+    display: none;
+  }
+}
+
+/* The element must be positioned (relative/absolute) so the ring sits on it. */
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: pulse 2.4s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .rise,
+  .fade,
+  .unveil,
+  .unveil img,
+  .pulse::after {
+    animation: none !important;
+  }
+
+  .link {
+    transition: none;
+  }
+
+  /* Scroll-linked motion values are set inline; override them so nothing moves. */
+  .parallax-layer {
+    transform: none !important;
+    top: 0 !important;
+    bottom: 0 !important;
+  }
+
+  .scroll-line-fill {
+    transform: none !important;
   }
 }
